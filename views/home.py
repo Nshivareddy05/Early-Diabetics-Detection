@@ -5,9 +5,9 @@ import config
 def render(domains_data):
     st.title(f"{config.APP_ICON} Welcome to {config.APP_NAME}")
     st.markdown("""
-        <p style='font-size: 1.2rem; color: var(--muted);'>
-        Your ultimate guide to navigating the complex world of engineering careers. 
-        Explore deep technical roadmaps, discover skill requirements, and find your perfect engineering domain.
+        <p style='font-size: 1.25rem; color: var(--muted); line-height: 1.6; max-width: 800px;'>
+        The ultimate intelligence platform for accelerating your engineering career. 
+        Navigate complex industry landscapes, leverage deep technical roadmaps, and engineer your future with precision.
         </p>
     """, unsafe_allow_html=True)
     
@@ -16,41 +16,41 @@ def render(domains_data):
     # Animated Stats Cards
     col1, col2, col3 = st.columns(3)
     with col1:
-        render_metric_card("Domains Covered", str(len(domains_data)) if domains_data else "12+", "Detailed Pathways", "📚")
+        render_metric_card("Engineering Domains", str(len(domains_data)) if domains_data else "12+", "Comprehensive Pathways", "🚀")
     with col2:
-        render_metric_card("Interactive Roadmaps", "3 Levels", "Beginner to Advanced", "🗺️")
+        render_metric_card("Dynamic Roadmaps", "Tiered", "Foundational to Advanced", "🗺️")
     with col3:
-        render_metric_card("Career Data", "Real-time", "Salary & Demand Trends", "📈")
+        render_metric_card("Market Analytics", "Real-time", "Salary & Industry Trends", "📈")
         
     st.markdown("---")
     
-    st.subheader("How to use this Hub")
+    st.subheader("Platform Capabilities")
     
     col_a, col_b = st.columns(2)
     with col_a:
         st.markdown("""
         <div class='glass-card'>
-            <h4>🔍 Explore Domains</h4>
-            <p style='color: var(--muted);'>Dive deep into specific engineering fields. View required skills, technologies, and step-by-step interactive learning roadmaps.</p>
+            <h4 style='margin-bottom: 0.5rem;'>🔍 Deep Domain Intelligence</h4>
+            <p style='color: var(--muted); font-size: 0.95rem; line-height: 1.5;'>Immerse yourself in specialized engineering fields. Uncover critical skill requirements, state-of-the-art technology stacks, and interactive node-based learning trajectories.</p>
         </div>
         """, unsafe_allow_html=True)
         st.markdown("""
         <div class='glass-card'>
-            <h4>⚖️ Compare Domains</h4>
-            <p style='color: var(--muted);'>Can't decide between CS and IT? Or Mechanical vs Aerospace? Use our comparison tool to analyze salary, demand, and skill overlaps.</p>
+            <h4 style='margin-bottom: 0.5rem;'>⚖️ Strategic Architecture Comparison</h4>
+            <p style='color: var(--muted); font-size: 0.95rem; line-height: 1.5;'>Evaluating Computer Science vs AI? Or Mechanical vs Aerospace? Utilize our advanced comparison matrix to benchmark salary vectors, market demand, and skill intersections.</p>
         </div>
         """, unsafe_allow_html=True)
         
     with col_b:
         st.markdown("""
         <div class='glass-card'>
-            <h4>🤖 AI Recommendation</h4>
-            <p style='color: var(--muted);'>Not sure where to start? Take our interactive quiz and let our recommendation engine find the perfect engineering discipline for your interests.</p>
+            <h4 style='margin-bottom: 0.5rem;'>🤖 AI-Driven Career Synthesis</h4>
+            <p style='color: var(--muted); font-size: 0.95rem; line-height: 1.5;'>Uncertain of your optimal trajectory? Engage with our intelligent diagnostic engine to algorithmically map your inherent interests to the perfect engineering discipline.</p>
         </div>
         """, unsafe_allow_html=True)
         st.markdown("""
         <div class='glass-card'>
-            <h4>🎯 Skill Gap Analyzer</h4>
-            <p style='color: var(--muted);'>Input your current skills and target role, and we'll tell you exactly what you need to learn next.</p>
+            <h4 style='margin-bottom: 0.5rem;'>🎯 Precision Skill-Gap Analysis</h4>
+            <p style='color: var(--muted); font-size: 0.95rem; line-height: 1.5;'>Input your existing technical baseline and target objective. Our analytics engine will compute the exact delta and generate a prioritized execution plan.</p>
         </div>
         """, unsafe_allow_html=True)

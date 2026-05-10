@@ -103,5 +103,23 @@ def render(domains_data, roadmaps_data):
     with tab4:
         st.subheader("Recommended Learning Resources")
         for res in data.get("resources", []):
-            icon = "📺" if "Course" in res.get("type", "") else "📖"
+            res_type = res.get("type", "").lower()
+            if "youtube" in res_type:
+                icon = "▶️"
+            elif "github" in res_type:
+                icon = "🐙"
+            elif "doc" in res_type:
+                icon = "📄"
+            elif "cert" in res_type:
+                icon = "📜"
+            elif "intern" in res_type or "placement" in res_type or "career" in res_type:
+                icon = "💼"
+            elif "gate" in res_type:
+                icon = "🎓"
+            elif "course" in res_type:
+                icon = "🏫"
+            elif "tool" in res_type:
+                icon = "🛠️"
+            else:
+                icon = "🔗"
             render_resource_link(res.get("title", ""), res.get("url", "#"), icon)

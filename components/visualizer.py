@@ -43,14 +43,37 @@ def render_roadmap_graph(domain_name, roadmaps_data):
         width="100%",
         height=600,
         directed=True,
-        physics=False,
+        physics=True,
         hierarchical=True,
         nodeHighlightBehavior=True,
         highlightColor="#00f2fe",
         collapsible=True,
-        backgroundColor=config.THEME_COLORS["background"]
+        backgroundColor="transparent",
+        interaction={"hover": True, "navigationButtons": True, "keyboard": True}
     )
+    
+    st.markdown("""
+    <style>
+    .roadmap-container {
+        border-radius: 16px;
+        background: rgba(15, 23, 42, 0.5);
+        border: 1px solid rgba(0, 242, 254, 0.2);
+        box-shadow: 0 0 20px rgba(0, 242, 254, 0.1);
+        overflow: hidden;
+        padding: 10px;
+        transition: all 0.3s ease;
+    }
+    .roadmap-container:hover {
+        box-shadow: 0 0 30px rgba(0, 242, 254, 0.3);
+        border-color: rgba(0, 242, 254, 0.5);
+    }
+    </style>
+    <div class="roadmap-container">
+    """, unsafe_allow_html=True)
     
     # Returns the ID of the clicked node
     clicked_node = agraph(nodes=nodes, edges=edges, config=cfg)
+    
+    st.markdown("</div>", unsafe_allow_html=True)
+    
     return clicked_node

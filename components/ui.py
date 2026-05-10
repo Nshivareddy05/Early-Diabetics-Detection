@@ -2,12 +2,27 @@ import streamlit as st
 import config
 
 def render_metric_card(title, value, subtitle="", icon=""):
+    import re
+    
+    # Extract numbers for animation
+    numeric_match = re.search(r'\d+', str(value))
+    if numeric_match and len(str(value)) < 15:
+        target = numeric_match.group()
+        parts = str(value).split(target)
+        prefix = parts[0]
+        suffix = parts[1] if len(parts) > 1 else ""
+        display_html = f'{prefix}<span class="animate-number" data-target="{target}">0</span>{suffix}'
+    else:
+        display_html = str(value)
+        
     st.markdown(f"""
-        <div class="glass-card" style="text-align: center;">
-            <div style="font-size: 2rem; margin-bottom: 10px;">{icon}</div>
-            <h3 style="margin:0; font-size: 1.2rem; color: var(--muted);">{title}</h3>
-            <h2 style="margin:10px 0; font-size: 2rem; color: var(--primary);">{value}</h2>
-            <p style="margin:0; font-size: 0.9rem; color: var(--muted);">{subtitle}</p>
+        <div class="glass-card metric-card" style="text-align: center; position: relative; overflow: hidden; border-top: 2px solid rgba(0, 242, 254, 0.1);">
+            <div style="font-size: 2.2rem; margin-bottom: 12px; filter: drop-shadow(0 0 8px rgba(0,242,254,0.4));">{icon}</div>
+            <h3 style="margin:0; font-size: 0.95rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px;">{title}</h3>
+            <h2 style="margin:12px 0; font-size: 2.5rem; color: var(--primary); font-weight: 800; text-shadow: 0 0 20px rgba(0,242,254,0.3);">
+                {display_html}
+            </h2>
+            <p style="margin:0; font-size: 0.85rem; color: var(--muted); opacity: 0.8; letter-spacing: 0.5px;">{subtitle}</p>
         </div>
     """, unsafe_allow_html=True)
 

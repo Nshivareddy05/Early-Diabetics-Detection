@@ -1,47 +1,160 @@
 import streamlit as st
-import utils.state_manager as state_manager
+import google.generativeai as genai
+import config
+
+# Define System Prompt
+SYSTEM_PROMPT = """
+You are an advanced, intelligent, and highly professional Engineering Career Assistant and Mentor. 
+Your goal is to guide students based on their engineering branch, interests, skills, career goals, and preferred technologies.
+You support all engineering domains (CSE, AI/ML, Data Science, Cybersecurity, Mechanical, Civil, Electrical, ECE, Robotics, Biotechnology, etc.).
+You can provide roadmap guidance, learning paths, project ideas, certification suggestions, GATE/Placement preparation strategies, and internship advice.
+Be conversational, professional, friendly, and concise. Format your responses using markdown, bullet points, and bold text for readability.
+Do not hallucinate links. If you suggest resources, make sure they are widely known (like Coursera, freeCodeCamp, MIT OCW).
+"""
+
+def setup_gemini():
+    try:
+        api_key = st.secrets["GEMINI_API_KEY"]
+        genai.configure(api_key=api_key)
+        
+        # Generation config
+        generation_config = {
+            "temperature": 0.7,
+            "top_p": 0.9,
+            "max_output_tokens": 2048,
+        }
+        
+        model = genai.GenerativeModel(
+            model_name="gemini-2.5-flash",
+            generation_config=generation_config,
+            system_instruction=SYSTEM_PROMPT
+        )
+        return model
+    except Exception as e:
+        st.error(f"Failed to initialize Gemini API. Make sure GEMINI_API_KEY is set in .streamlit/secrets.toml. Error: {e}")
+        return None
+
+def inject_chat_css():
+    st.markdown("""
+        <style>
+            /* Chat container adjustments */
+            .stChatMessage {
+                background: rgba(15, 23, 42, 0.4);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.05);
+                border-radius: 12px;
+                padding: 15px 20px;
+                margin-bottom: 15px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+                transition: all 0.3s ease;
+            }
+            .stChatMessage:hover {
+                box-shadow: 0 4px 20px rgba(0, 242, 254, 0.15);
+                border-color: rgba(0, 242, 254, 0.3);
+            }
+            /* User message specific style */
+            [data-testid="stChatMessage"]:nth-child(even) {
+                background: rgba(0, 242, 254, 0.05);
+                border-color: rgba(0, 242, 254, 0.1);
+            }
+            /* Quick action buttons */
+            .quick-btn > button {
+                width: 100%;
+                background: rgba(30, 41, 59, 0.5) !important;
+                border: 1px solid rgba(0, 242, 254, 0.2) !important;
+                color: var(--text) !important;
+                border-radius: 8px !important;
+                padding: 8px !important;
+                font-size: 0.85rem !important;
+                transition: all 0.2s ease !important;
+                text-align: left !important;
+                justify-content: flex-start !important;
+            }
+            .quick-btn > button:hover {
+                background: rgba(0, 242, 254, 0.1) !important;
+                border-color: var(--primary) !important;
+                color: var(--primary) !important;
+                transform: translateX(4px);
+            }
+        </style>
+    """, unsafe_allow_html=True)
 
 def render(domains_data):
-    st.title("🤖 AI Chatbot Assistant")
-    st.markdown("<p style='color: var(--muted);'>Ask me anything about engineering domains, salaries, or what skills you need to learn!</p>", unsafe_allow_html=True)
+    st.title("🤖 AI Career Mentor")
+    st.markdown("<p style='color: var(--muted); font-size: 1.1rem; max-width: 800px;'>Your personal engineering guide powered by Gemini. Ask me about roadmaps, skills, GATE preparation, internships, and more.</p>", unsafe_allow_html=True)
     
-    # Display chat messages from history
-    for msg in st.session_state.chat_history:
-        with st.chat_message(msg["role"]):
+    inject_chat_css()
+    
+    # Initialize Chat Session
+    if "gemini_model" not in st.session_state:
+        st.session_state.gemini_model = setup_gemini()
+        
+    if "chat_session" not in st.session_state and st.session_state.gemini_model:
+        st.session_state.chat_session = st.session_state.gemini_model.start_chat(history=[])
+        
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
+        
+        # Add initial greeting
+        greeting = "Hello! I'm your AI Engineering Mentor. Which branch are you studying, and what are your career goals?"
+        st.session_state.messages.append({"role": "assistant", "content": greeting})
+    
+    # Sidebar / Panel Options
+    with st.sidebar:
+        st.markdown("### 💡 Quick Suggestions")
+        st.markdown("<p style='font-size: 0.8rem; color: var(--muted);'>Click to ask</p>", unsafe_allow_html=True)
+        
+        prompts = [
+            "Best roadmap for AI Engineer",
+            "How to prepare for GATE CSE",
+            "Skills needed for Robotics",
+            "Best projects for Data Science",
+            "Roadmap to become a Cybersecurity Engineer",
+            "How to secure a Google Internship"
+        ]
+        
+        clicked_prompt = None
+        for p in prompts:
+            st.markdown('<div class="quick-btn">', unsafe_allow_html=True)
+            if st.button(f"💬 {p}", key=f"btn_{p}"):
+                clicked_prompt = p
+            st.markdown('</div>', unsafe_allow_html=True)
+            
+        st.markdown("---")
+        if st.button("🗑️ Clear Chat History", use_container_width=True):
+            st.session_state.messages = []
+            if st.session_state.gemini_model:
+                st.session_state.chat_session = st.session_state.gemini_model.start_chat(history=[])
+            st.rerun()
+
+    # Display chat messages
+    for msg in st.session_state.messages:
+        avatar = "🤖" if msg["role"] == "assistant" else "🧑‍💻"
+        with st.chat_message(msg["role"], avatar=avatar):
             st.markdown(msg["content"])
             
-    # Chat input
-    if prompt := st.chat_input("E.g., What is the salary for a data scientist?"):
+    # Handle Input (either from chat input or quick suggestion button)
+    user_input = st.chat_input("Ask about your engineering career...")
+    prompt = clicked_prompt if clicked_prompt else user_input
+
+    if prompt:
         # Add user message
-        st.session_state.chat_history.append({"role": "user", "content": prompt})
-        with st.chat_message("user"):
+        st.session_state.messages.append({"role": "user", "content": prompt})
+        with st.chat_message("user", avatar="🧑‍💻"):
             st.markdown(prompt)
             
-        # Generate Rule-based Response
-        response = generate_response(prompt.lower(), domains_data)
-        
-        # Add assistant message
-        st.session_state.chat_history.append({"role": "assistant", "content": response})
-        with st.chat_message("assistant"):
-            st.markdown(response)
-
-def generate_response(query, domains_data):
-    # Very simple keyword matching
-    if "salary" in query or "pay" in query:
-        for domain, data in domains_data.items():
-            if domain.lower() in query:
-                s = data.get("salary_trends", {})
-                return f"The salary for {domain} typically ranges from **{s.get('Entry')}** for entry-level, up to **{s.get('Senior')}** for senior roles."
-        return "Which domain's salary are you interested in? (e.g., Computer Science, Mechanical)"
-        
-    if "skill" in query or "learn" in query:
-        for domain, data in domains_data.items():
-            if domain.lower() in query:
-                skills = ", ".join(data.get("skills", [])[:5])
-                return f"To succeed in {domain}, you should focus on learning: **{skills}**."
-        return "I can tell you the skills needed for any domain. Just ask 'What skills do I need for Data Science?'"
-        
-    if "hi" in query or "hello" in query:
-        return "Hello! How can I assist you with your engineering roadmap today?"
-        
-    return "I'm a simple rule-based assistant currently. Try asking me about the **salary** or **skills** for a specific engineering domain!"
+        # Generate Response
+        if st.session_state.gemini_model:
+            with st.chat_message("assistant", avatar="🤖"):
+                with st.spinner("Analyzing your request..."):
+                    try:
+                        response = st.session_state.chat_session.send_message(prompt)
+                        st.markdown(response.text)
+                        st.session_state.messages.append({"role": "assistant", "content": response.text})
+                    except Exception as e:
+                        error_msg = f"Sorry, I encountered an error: {str(e)}"
+                        st.error(error_msg)
+                        st.session_state.messages.append({"role": "assistant", "content": error_msg})
+        else:
+            with st.chat_message("assistant", avatar="🤖"):
+                st.warning("AI model is not initialized. Please check your API key configuration.")
