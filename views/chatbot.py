@@ -86,7 +86,7 @@ def render(domains_data):
     inject_chat_css()
     
     # Initialize Chat Session
-    if "gemini_model" not in st.session_state:
+    if "gemini_model" not in st.session_state or st.session_state.gemini_model is None:
         st.session_state.gemini_model = setup_gemini()
         
     if "chat_session" not in st.session_state and st.session_state.gemini_model:
