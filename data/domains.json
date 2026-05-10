@@ -1,0 +1,136 @@
+{
+    "Computer Science": {
+        "overview": "Computer Science is the study of computation, automation, and information. It spans theoretical disciplines to practical disciplines, focusing on software development, algorithms, and system architecture.",
+        "skills": ["Algorithms", "Data Structures", "System Design", "Networking", "Databases", "Version Control", "Cloud Infrastructure", "Clean Code"],
+        "technologies": ["Python", "Java", "C++", "JavaScript", "SQL", "Git", "Linux", "Docker", "Kubernetes", "AWS/GCP"],
+        "projects": [
+            "Full-Stack E-commerce Application with Microservices",
+            "Distributed Key-Value Store from Scratch",
+            "Custom OS Kernel Module",
+            "Real-time Scalable Chat Application using WebSockets"
+        ],
+        "career_opportunities": ["Software Development Engineer (SDE)", "Systems Architect", "Backend Developer", "Security Analyst"],
+        "salary_trends": {
+            "Entry": "$80k - $130k",
+            "Mid": "$130k - $180k",
+            "Senior": "$180k+"
+        },
+        "resources": [
+            {"title": "CS50 - Harvard's Intro to Computer Science", "url": "https://cs50.harvard.edu/", "type": "Course"},
+            {"title": "FreeCodeCamp - Full Stack Paths", "url": "https://www.freecodecamp.org/", "type": "Platform"},
+            {"title": "Fireship (YouTube)", "url": "https://www.youtube.com/c/Fireship", "type": "YouTube"},
+            {"title": "NeetCode - DSA Practice", "url": "https://neetcode.io/", "type": "Practice"},
+            {"title": "ByteByteGo - System Design", "url": "https://bytebytego.com/", "type": "Documentation"},
+            {"title": "GitHub: Awesome Computer Science", "url": "https://github.com/ashishb/awesome-computer-science", "type": "GitHub"}
+        ],
+        "future_scope": "Continued growth in cloud infrastructure, Web3, high-performance computing, and edge computing.",
+        "trending_technologies": ["WebAssembly (Wasm)", "Serverless Architecture", "Micro-frontends"],
+        "certifications": ["AWS Certified Solutions Architect", "Google Professional Cloud Developer", "Certified Kubernetes Administrator (CKA)"]
+    },
+    "AI & Machine Learning": {
+        "overview": "AI/ML focuses on creating systems capable of learning from data and making intelligent decisions without explicit programming. It's revolutionizing industries from healthcare to autonomous driving.",
+        "skills": ["Linear Algebra", "Calculus", "Probability & Statistics", "Data Preprocessing", "Model Evaluation", "Neural Networks"],
+        "technologies": ["Python", "TensorFlow", "PyTorch", "Scikit-Learn", "Pandas", "CUDA", "HuggingFace"],
+        "projects": [
+            "End-to-End Image Classification Pipeline",
+            "Retrieval-Augmented Generation (RAG) Chatbot",
+            "Recommendation Engine using Collaborative Filtering",
+            "Predictive Maintenance Model for IoT data",
+            "Generative Adversarial Network (GAN) for Art Generation"
+        ],
+        "career_opportunities": ["Machine Learning Engineer", "AI Researcher", "Data Scientist", "NLP Engineer", "Prompt Engineer", "MLOps Engineer"],
+        "salary_trends": {
+            "Entry": "$100k - $140k",
+            "Mid": "$140k - $200k",
+            "Senior": "$200k+"
+        },
+        "resources": [
+            {"title": "Andrew Ng - Machine Learning Specialization", "url": "https://www.coursera.org/specializations/machine-learning-introduction", "type": "Course"},
+            {"title": "Hugging Face NLP Course", "url": "https://huggingface.co/course/", "type": "Documentation"},
+            {"title": "StatQuest with Josh Starmer", "url": "https://www.youtube.com/c/joshstarmer", "type": "YouTube"},
+            {"title": "Papers with Code", "url": "https://paperswithcode.com/", "type": "Research"},
+            {"title": "Kaggle - Practice and Datasets", "url": "https://www.kaggle.com/", "type": "Practice"},
+            {"title": "GitHub: Awesome Machine Learning", "url": "https://github.com/josephmisiti/awesome-machine-learning", "type": "GitHub"}
+        ],
+        "future_scope": "Generative AI, Agentic workflows, AGI research, Edge AI, and AI alignment/safety.",
+        "trending_technologies": ["Large Language Models (LLMs)", "Retrieval-Augmented Generation (RAG)", "Agentic AI", "LoRA/QLoRA"],
+        "certifications": ["TensorFlow Developer Certificate", "AWS Certified Machine Learning - Specialty", "DeepLearning.AI Specialized Certificates"]
+    },
+    "Data Science": {
+        "overview": "Data Science extracts meaningful insights from massive datasets using statistical analysis, machine learning, and domain expertise to drive business decisions.",
+        "skills": ["Statistical Analysis", "Data Wrangling", "Data Visualization", "Business Acumen", "A/B Testing", "Big Data Processing"],
+        "technologies": ["Python", "R", "SQL", "Tableau", "PowerBI", "Apache Spark", "Snowflake"],
+        "projects": [
+            "Customer Churn Prediction Model",
+            "Interactive Real-Time Sales Dashboard",
+            "Market Basket Analysis & Recommendation",
+            "Financial Time-Series Forecasting"
+        ],
+        "career_opportunities": ["Data Scientist", "Data Analyst", "Data Engineer", "Business Intelligence (BI) Developer"],
+        "salary_trends": {
+            "Entry": "$85k - $120k",
+            "Mid": "$120k - $160k",
+            "Senior": "$160k+"
+        },
+        "resources": [
+            {"title": "Kaggle", "url": "https://www.kaggle.com/", "type": "Platform"},
+            {"title": "DataCamp", "url": "https://www.datacamp.com/", "type": "Platform"},
+            {"title": "Towards Data Science (Medium)", "url": "https://towardsdatascience.com/", "type": "Research"},
+            {"title": "Ken Jee (YouTube)", "url": "https://www.youtube.com/c/KenJee1", "type": "YouTube"},
+            {"title": "GitHub: Awesome Data Science", "url": "https://github.com/bulutyazilim/awesome-datascience", "type": "GitHub"}
+        ],
+        "future_scope": "Automated ML (AutoML), Real-time analytics, and Data privacy frameworks (Federated Learning).",
+        "trending_technologies": ["AutoML", "Federated Learning", "Real-time stream processing", "Data Lakehouses"],
+        "certifications": ["IBM Data Science Professional", "Google Data Analytics Certificate", "Microsoft Certified: Data Scientist Associate"]
+    },
+    "Mechanical Engineering": {
+        "overview": "Mechanical engineering applies principles of physics and materials science for analysis, design, manufacturing, and maintenance of mechanical systems.",
+        "skills": ["Thermodynamics", "Fluid Mechanics", "CAD/CAM", "Material Science", "Finite Element Analysis (FEA)", "Kinematics", "Mechatronics"],
+        "technologies": ["SolidWorks", "AutoCAD", "ANSYS", "MATLAB", "Python", "Fusion 360"],
+        "projects": [
+            "Custom 3D Printer Design and Assembly",
+            "Aerodynamic Analysis of an FSAE Vehicle",
+            "Automated Sorting Mechanism using Arduino",
+            "HVAC System Optimization for Smart Buildings"
+        ],
+        "career_opportunities": ["Mechanical Engineer", "Product Design Engineer", "Manufacturing Engineer", "Thermal Systems Engineer"],
+        "salary_trends": {
+            "Entry": "$65k - $90k",
+            "Mid": "$90k - $120k",
+            "Senior": "$120k+"
+        },
+        "resources": [
+            {"title": "Engineering Toolbox", "url": "https://www.engineeringtoolbox.com/", "type": "Resource"},
+            {"title": "Learn SolidWorks Official", "url": "https://my.solidworks.com/training", "type": "Course"},
+            {"title": "Real Engineering (YouTube)", "url": "https://www.youtube.com/c/RealEngineering", "type": "YouTube"},
+            {"title": "GrabCAD - 3D Models & Community", "url": "https://grabcad.com/", "type": "Platform"}
+        ],
+        "future_scope": "Additive Manufacturing (3D Printing), Smart Materials, Robotics integration, and Green Energy Systems.",
+        "trending_technologies": ["Digital Twins", "Generative Design", "Industrial IoT (IIoT)"],
+        "certifications": ["Certified SolidWorks Professional (CSWP)", "Autodesk Certified Professional", "ASME Certifications"]
+    },
+    "Aerospace Engineering": {
+        "overview": "Aerospace engineering is the primary field of engineering concerned with the development of aircraft, spacecraft, and advanced propulsion systems.",
+        "skills": ["Aerodynamics", "Propulsion Systems", "Orbital Mechanics", "Structural Analysis", "Flight Dynamics", "Control Systems"],
+        "technologies": ["CATIA", "Simulink", "CFD Software (Fluent)", "STK (Systems Tool Kit)", "C++", "Python"],
+        "projects": [
+            "Model Rocket Trajectory Simulation and Optimization",
+            "Drone Flight Controller Programming from Scratch",
+            "Wind Tunnel CFD Analysis of Airfoils"
+        ],
+        "career_opportunities": ["Aerospace Engineer", "Flight Systems Engineer", "Propulsion Engineer", "Aerodynamicist", "Avionics Engineer"],
+        "salary_trends": {
+            "Entry": "$75k - $100k",
+            "Mid": "$100k - $140k",
+            "Senior": "$140k+"
+        },
+        "resources": [
+            {"title": "MIT OCW Aeronautics", "url": "https://ocw.mit.edu/search/?d=Aeronautics%20and%20Astronautics", "type": "Course"},
+            {"title": "NASA Technical Reports Server (NTRS)", "url": "https://ntrs.nasa.gov/", "type": "Research"},
+            {"title": "Everyday Astronaut (YouTube)", "url": "https://www.youtube.com/c/EverydayAstronaut", "type": "YouTube"}
+        ],
+        "future_scope": "Commercial space travel, reusable launch vehicles, electric aircraft, and hypersonic flight.",
+        "trending_technologies": ["Electric Propulsion", "Hypersonics", "Autonomous Flight Systems", "In-situ Resource Utilization (ISRU)"],
+        "certifications": ["Systems Engineering Professional (INCOSE)", "Private Pilot License (PPL - Optional but helpful)"]
+    }
+}
