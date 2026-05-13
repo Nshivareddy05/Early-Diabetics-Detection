@@ -65,9 +65,14 @@ def inject_custom_css():
         #viewerBadge_container {display: none !important;}
         .viewerBadge_link {display: none !important;}
         [data-testid="manage-app-button"] {display: none !important;}
+        [data-testid="viewerBadge"] {display: none !important;}
         div[class*="viewerBadge"] {display: none !important;}
         div[class*="stDeployButton"] {display: none !important;}
         div[class*="stAppDeployButton"] {display: none !important;}
+        
+        /* Specifically target the GitHub Profile Picture and Streamlit Watermarks */
+        img[src*="avatars.githubusercontent.com"] {display: none !important; visibility: hidden !important;}
+        a[href*="streamlit.io/cloud"] {display: none !important; visibility: hidden !important;}
 
         /* =========================================
            NATIVE STREAMLIT OVERRIDES
