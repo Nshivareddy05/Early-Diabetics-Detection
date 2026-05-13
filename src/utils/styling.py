@@ -65,6 +65,9 @@ def inject_custom_css():
         #viewerBadge_container {display: none !important;}
         .viewerBadge_link {display: none !important;}
         [data-testid="manage-app-button"] {display: none !important;}
+        div[class*="viewerBadge"] {display: none !important;}
+        div[class*="stDeployButton"] {display: none !important;}
+        div[class*="stAppDeployButton"] {display: none !important;}
 
         /* =========================================
            NATIVE STREAMLIT OVERRIDES
