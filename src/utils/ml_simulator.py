@@ -14,25 +14,54 @@ def simulate_processing(steps, placeholder, progress_bar):
         time.sleep(np.random.uniform(0.4, 1.2))
 
 def generate_prediction(data):
-    """Generates a prediction based on inputs. Hardcoded rules to feel realistic."""
+    """Generates a deterministic prediction based on inputs. No random noise to ensure identical inputs yield identical outputs."""
+    pregnancies = data.get("Pregnancies", 0)
     glucose = data.get("Glucose", 100)
+    bp = data.get("Blood Pressure", 70)
+    skin = data.get("Skin Thickness", 20)
+    insulin = data.get("Insulin", 79)
     bmi = data.get("BMI", 25.0)
+    dpf = data.get("Diabetes Pedigree", 0.5)
     age = data.get("Age", 30)
     
     # Calculate a base risk score
-    risk_score = 0
-    if glucose > 140: risk_score += 40
-    elif glucose > 100: risk_score += 15
+    risk_score = 0.0
     
-    if bmi > 30: risk_score += 25
+    # Glucose is the strongest predictor
+    if glucose > 125: risk_score += 40
+    elif glucose > 100: risk_score += 15
+    elif glucose < 70: risk_score -= 5
+    
+    # BMI
+    if bmi > 30: risk_score += 20
     elif bmi > 25: risk_score += 10
         
-    if age > 45: risk_score += 15
+    # Age
+    if age > 45: risk_score += 10
     elif age > 35: risk_score += 5
         
-    # Introduce some stochasticity to make it feel "model-like"
-    noise = np.random.normal(0, 5)
-    final_risk = min(max(risk_score + noise, 5), 98) # Keep between 5 and 98%
+    # Pedigree function
+    if dpf > 0.8: risk_score += 10
+    elif dpf > 0.5: risk_score += 5
+        
+    # Pregnancies
+    if pregnancies > 3: risk_score += 5
+    
+    # Insulin
+    if insulin > 150: risk_score += 5
+    
+    # Blood Pressure
+    if bp > 90: risk_score += 5
+
+    # Base risk should be slightly varied based on the exact combination to avoid round numbers.
+    # This acts as deterministic pseudo-noise, calculated from the inputs.
+    pseudo_noise = (glucose * 0.11) + (bmi * 0.13) + (age * 0.07) + (dpf * 11) - (pregnancies * 0.4)
+    pseudo_noise = (pseudo_noise % 7) - 3.5  # Normalize to a range of -3.5 to +3.5
+    
+    final_risk = risk_score + pseudo_noise
+    
+    # Keep between 2.1 and 98.4%
+    final_risk = min(max(final_risk, 2.1), 98.4) 
     
     prediction = 1 if final_risk > 50 else 0
     return prediction, final_risk

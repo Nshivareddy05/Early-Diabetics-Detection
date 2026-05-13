@@ -2,6 +2,8 @@ import streamlit as st
 import time
 from datetime import datetime
 import uuid
+import pandas as pd
+import os
 from src.utils.ml_simulator import simulate_processing, generate_prediction, create_gauge_chart, get_medical_recommendation
 from src.utils.styling import render_html_card
 
@@ -68,7 +70,14 @@ def render_prediction():
                 simulate_processing(steps, placeholder, progress_bar)
                 
                 patient_data = {
-                    "Glucose": glucose, "BMI": bmi, "Age": age
+                    "Pregnancies": pregnancies,
+                    "Glucose": glucose,
+                    "Blood Pressure": bp,
+                    "Skin Thickness": skin,
+                    "Insulin": insulin,
+                    "BMI": bmi,
+                    "Diabetes Pedigree": dpf,
+                    "Age": age
                 }
                 
                 pred_class, confidence = generate_prediction(patient_data)
@@ -76,12 +85,31 @@ def render_prediction():
                 st.session_state.pred_class = pred_class
                 st.session_state.confidence = confidence
                 st.session_state.patient_data = patient_data
-                st.session_state.patient_info = {
+                patient_info = {
                     "id": patient_id if patient_id else f"PID-{uuid.uuid4().hex[:6].upper()}",
                     "name": patient_name if patient_name else "Anonymous",
                     "notes": patient_notes,
                     "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 }
+                st.session_state.patient_info = patient_info
+                
+                # Save to CSV
+                record = {
+                    "Patient ID": patient_info['id'],
+                    "Name": patient_info['name'],
+                    "Timestamp": patient_info['timestamp'],
+                    "Prediction": "Diabetic" if pred_class == 1 else "Non-Diabetic",
+                    "Confidence (%)": round(confidence, 1),
+                    "Glucose": patient_data['Glucose'],
+                    "BMI": patient_data['BMI'],
+                    "Age": patient_data['Age'],
+                    "Notes": patient_info['notes']
+                }
+                df = pd.DataFrame([record])
+                if not os.path.exists("patient_records.csv"):
+                    df.to_csv("patient_records.csv", index=False)
+                else:
+                    df.to_csv("patient_records.csv", mode='a', header=False, index=False)
                 
                 time.sleep(0.5)
                 st.rerun()
@@ -158,3 +186,31 @@ def render_prediction():
     <p style="color: rgba(255,255,255,0.4);">Fill out the clinical parameters on the left and run the pipeline to generate a diagnostic report.</p>
 </div>
 """, unsafe_allow_html=True)
+
+    # View Records Section
+    st.markdown("<hr style='border-color: rgba(255,255,255,0.1); margin: 40px 0 20px 0;'>", unsafe_allow_html=True)
+    
+    col_btn, _ = st.columns([1, 3])
+    with col_btn:
+        if st.button("🗃️ Toggle Patient Records Database"):
+            st.session_state.show_records = not st.session_state.get('show_records', False)
+            
+    if st.session_state.get('show_records', False):
+        st.markdown("<h3 style='margin-bottom: 15px; margin-top: 10px;'>Secure Patient History</h3>", unsafe_allow_html=True)
+        if os.path.exists("patient_records.csv"):
+            df = pd.read_csv("patient_records.csv")
+            # Sort by Timestamp descending (newest first)
+            if "Timestamp" in df.columns:
+                df = df.sort_values(by="Timestamp", ascending=False)
+            st.dataframe(df, use_container_width=True, hide_index=True)
+            
+            # Allow downloading the full CSV
+            csv = df.to_csv(index=False).encode('utf-8')
+            st.download_button(
+                label="📥 Download Database Backup (CSV)",
+                data=csv,
+                file_name='patient_records_backup.csv',
+                mime='text/csv',
+            )
+        else:
+            st.info("No patient records found in the local database. Run a classification pipeline to save data.")
