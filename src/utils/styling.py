@@ -60,7 +60,11 @@ def inject_custom_css():
         header {visibility: hidden;}
         .viewerBadge_container {display: none !important;}
         .stDeployButton {display: none !important;}
-        [data-testid="stToolbar"] {visibility: hidden !important;}
+        [data-testid="stToolbar"] {display: none !important;}
+        [data-testid="stAppDeployButton"] {display: none !important;}
+        #viewerBadge_container {display: none !important;}
+        .viewerBadge_link {display: none !important;}
+        [data-testid="manage-app-button"] {display: none !important;}
 
         /* =========================================
            NATIVE STREAMLIT OVERRIDES
