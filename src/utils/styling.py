@@ -57,7 +57,7 @@ def inject_custom_css():
         /* Hide Streamlit default components */
         #MainMenu {visibility: hidden;}
         footer {visibility: hidden;}
-        header {background-color: transparent !important;}
+        header {visibility: hidden;}
 
         /* =========================================
            NATIVE STREAMLIT OVERRIDES
