@@ -54,10 +54,13 @@ def inject_custom_css():
             -webkit-text-fill-color: transparent;
         }
 
-        /* Hide Streamlit default components */
+        /* Hide Streamlit default components and Cloud UI */
         #MainMenu {visibility: hidden;}
         footer {visibility: hidden;}
         header {visibility: hidden;}
+        .viewerBadge_container {display: none !important;}
+        .stDeployButton {display: none !important;}
+        [data-testid="stToolbar"] {visibility: hidden !important;}
 
         /* =========================================
            NATIVE STREAMLIT OVERRIDES
