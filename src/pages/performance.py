@@ -1,12 +1,5 @@
 import streamlit as st
 import pandas as pd
-from sklearn.metrics import (
-    accuracy_score,
-    precision_score,
-    recall_score,
-    f1_score,
-    confusion_matrix
-)
 
 from src.utils.ml_simulator import (
     create_roc_curve,
@@ -28,18 +21,19 @@ def render_performance():
         unsafe_allow_html=True
     )
 
-    y_true = [0] * 170 + [1] * 138
-    y_pred = [0] * 142 + [1] * 28 + [0] * 34 + [1] * 104
+    tn = 142
+    fp = 28
+    fn = 34
+    tp = 104
 
-    accuracy = accuracy_score(y_true, y_pred)
-    precision = precision_score(y_true, y_pred, zero_division=0)
-    recall = recall_score(y_true, y_pred, zero_division=0)
-    f1 = f1_score(y_true, y_pred, zero_division=0)
+    total = tn + fp + fn + tp
 
-    tn, fp, fn, tp = confusion_matrix(y_true, y_pred).ravel()
-
-    sensitivity = tp / (tp + fn) if (tp + fn) > 0 else 0
-    specificity = tn / (tn + fp) if (tn + fp) > 0 else 0
+    accuracy = (tp + tn) / total
+    precision = tp / (tp + fp)
+    recall = tp / (tp + fn)
+    sensitivity = recall
+    specificity = tn / (tn + fp)
+    f1 = 2 * (precision * recall) / (precision + recall)
 
     st.markdown(
         "<h3 style='margin-bottom: 1rem;'>📊 Classification Metrics</h3>",
@@ -191,7 +185,10 @@ def render_performance():
             margin=dict(l=40, r=40, t=40, b=40)
         )
 
-        st.plotly_chart(fig_roc, use_container_width=True)
+        st.plotly_chart(
+            fig_roc,
+            use_container_width=True
+        )
 
     with col2:
         st.markdown(
@@ -206,7 +203,10 @@ def render_performance():
             margin=dict(l=40, r=40, t=40, b=40)
         )
 
-        st.plotly_chart(fig_cm, use_container_width=True)
+        st.plotly_chart(
+            fig_cm,
+            use_container_width=True
+        )
 
     st.markdown(
         "<br><h3 style='margin-bottom: 1rem;'>🔬 Global Feature Interpretation</h3>",
@@ -220,7 +220,10 @@ def render_performance():
         margin=dict(l=20, r=40, t=40, b=20)
     )
 
-    st.plotly_chart(fig_fi, use_container_width=True)
+    st.plotly_chart(
+        fig_fi,
+        use_container_width=True
+    )
 
     st.markdown(
         """
